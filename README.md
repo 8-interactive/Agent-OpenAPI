@@ -1,4 +1,4 @@
-# Host URL:
+# Host URL
 https://8-interactive.github.io/Agent-OpenAPI/
 
 # How to host Swagger API documentation with GitHub Pages
