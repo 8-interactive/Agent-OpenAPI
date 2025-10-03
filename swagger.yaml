@@ -233,6 +233,59 @@ paths:
         "404": { $ref: "#/components/responses/NotFound" }
         "500": { $ref: "#/components/responses/InternalError" }
 
+  /appointments/services:
+    get:
+      summary: 取得可預約的服務清單
+      parameters:
+        - in: query
+          name: orgId
+          required: true
+          schema:
+            type: string
+          description: 組織 ID
+      responses:
+        "200":
+          description: 成功取得服務清單
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  services:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id: { type: string, example: svc_pico_laser }
+                        name: { type: string, example: 皮秒雷射 }
+                        type:
+                          type: string
+                          description: 服務類型 (person = 一對一服務, class = 多人課程)
+                          enum: [person, class]
+                          example: person
+                        durationMinutes: { type: integer, example: 60 }
+                        slots:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id: { type: string, example: slot_20250820_1000 }
+                              date: { type: string, example: "2025/08/20" }
+                              startTime: { type: string, example: "10:00" }
+                              endTime: { type: string, example: "11:00" }
+                              location:
+                                type: object
+                                properties:
+                                  room: { type: string, example: A診間 }
+                                  branch: { type: string, example: 仁愛店 }
+                              maxBooking: { type: integer, example: 1 }
+                              currentBooking: { type: integer, example: 1 }
+        "400": { $ref: "#/components/responses/BadRequest" }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "404": { $ref: "#/components/responses/NotFound" }
+        "500": { $ref: "#/components/responses/InternalError" }
+
   /appointments/slots/{service}/{phone}:
     get:
       summary: 取得可以預約的時段
